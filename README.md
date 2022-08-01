@@ -15,7 +15,7 @@
 - Run `suso apt upgrade`
 - Install go: `sudo apt install golang-go`
 - Install make: `sudo apt install make`
-- Checkout operator-sdk `git clone git@github.com:operator-framework/operator-sdk.git`
+- Checkout operator-sdk `git clone https://github.com/operator-framework/operator-sdk.git`
 
 ## Creating nginx-operator
 - mkdir nginx-operator and cd into it
