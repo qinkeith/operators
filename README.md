@@ -1,10 +1,13 @@
 # Operators
 
-## Operator with operator-sdk
+## Building operator-sdk
 
 - Checkout [operator-sdk](https://github.com/operator-framework/operator-sdk)
 - cd into operator-sdk and run `make install`
 - binaries are created under `./build`
+
+## Creating nginx-operator
+- mkdir nginx-operator and cd into it
 - initialzing a boilerplate:
 ```bash
 ../operator-sdk/build/operator-sdk init --domain qinkeith.com --repo github.com/example/nginx-operator
