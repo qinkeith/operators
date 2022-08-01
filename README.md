@@ -4,7 +4,7 @@
 
 - Checkout [operator-sdk](https://github.com/operator-framework/operator-sdk)
   ```bash
-  https://github.com/operator-framework/operator-sdk
+  git clone https://github.com/operator-framework/operator-sdk
   ```
 - cd into operator-sdk and run `make install`
 - binaries are created under `./build`
@@ -16,6 +16,8 @@
 - Install go: `sudo apt install golang-go`
 - Install make: `sudo apt install make`
 - Checkout operator-sdk `git clone https://github.com/operator-framework/operator-sdk.git`
+- cd into operator-sdk and run `make install`
+- binaries are created under `./build`
 
 ## Creating nginx-operator
 - mkdir nginx-operator and cd into it
