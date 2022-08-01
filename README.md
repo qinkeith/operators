@@ -11,8 +11,11 @@
 
 ## Building operator-sdk on WLS Ubuntu
 
+- Install Ubuntu 22.04 LTS from Microsoft app store
+- Run `suso apt upgrade`
 - Install go: `sudo apt install golang-go`
 - Install make: `sudo apt install make`
+- Checkout operator-sdk `git clone git@github.com:operator-framework/operator-sdk.git`
 
 ## Creating nginx-operator
 - mkdir nginx-operator and cd into it
