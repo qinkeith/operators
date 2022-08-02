@@ -34,8 +34,8 @@ type NginxOperatorSpec struct {
 
 // NginxOperatorStatus defines the observed state of NginxOperator
 type NginxOperatorStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// The list of status condition update 
+	Conditions []metav1.Condition `json:"condition"`
 }
 
 //+kubebuilder:object:root=true
