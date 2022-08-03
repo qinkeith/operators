@@ -1,14 +1,17 @@
 name: Go
 
+env:
+  BUILD_DIR: nginx-operator
+  
 on:
   push:
     branches: [ "main" ]
     paths:
-      - nginx-operator/**
+      - $BUILD_DIR/**
   pull_request:
     branches: [ "main" ]
     paths:
-      - nginx-operator/**
+      - $BUILD_DIR/**
 
 jobs:
 
@@ -23,7 +26,7 @@ jobs:
         go-version: 1.18
 
     - name: Build
-      run: go build -v ./nginx-operator
+      run: go build -v ./$BUILD_DIR
 
     - name: Test
-      run: go test -v ./nginx-operator
+      run: go test -v ./$BUILD_DIR
