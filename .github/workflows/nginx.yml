@@ -1,17 +1,17 @@
 name: Go
-
-env:
-  BUILD_DIR: nginx-operator
   
 on:
   push:
     branches: [ "main" ]
     paths:
-      - $BUILD_DIR/**
+      - nginx-operator/**
   pull_request:
     branches: [ "main" ]
     paths:
-      - $BUILD_DIR/**
+      - nginx-operator/**
+
+env:
+  BUILD_DIR: nginx-operator
 
 jobs:
 
