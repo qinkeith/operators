@@ -34,7 +34,7 @@ type NginxOperatorSpec struct {
 
 // NginxOperatorStatus defines the observed state of NginxOperator
 type NginxOperatorStatus struct {
-	// Conditions is the list of status condition updates 
+	// Conditions is the list of status condition updates
 	Conditions []metav1.Condition `json:"conditions"`
 }
 
