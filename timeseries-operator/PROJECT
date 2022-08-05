@@ -3,4 +3,14 @@ layout:
 - go.kubebuilder.io/v3
 projectName: timeseries-operator
 repo: qinkeith.com/operators/timeseries-operator
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: qinkeith.com
+  group: operator
+  kind: TimeseriesDB
+  path: qinkeith.com/operators/timeseries-operator/api/v1
+  version: v1
 version: "3"
