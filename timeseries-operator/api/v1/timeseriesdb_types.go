@@ -28,14 +28,16 @@ type TimeseriesDBSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of TimeseriesDB. Edit timeseriesdb_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	DBType   string `json:"dbType,omitempty"`
+	Replicas int    `json:"replicas,omitempty"`
 }
 
 // TimeseriesDBStatus defines the observed state of TimeseriesDB
 type TimeseriesDBStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	Status  string `json:"status,omitempty"`
+	Message string `json:"message,omitempty"`
 }
 
 //+kubebuilder:object:root=true

@@ -49,7 +49,26 @@ type TimeseriesDBReconciler struct {
 func (r *TimeseriesDBReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
-	// TODO(user): your logic here
+	ctx := context.Background()
+	log := r.Log.WithValues("timeseriesdb", req.NamespacedName)
+
+	timeseriesdb := new(operatorv1.TimeseriesDB)
+
+	if err := r.Client.Get(ctx, req.NamespacedName, timeseriesdb); err != nil {
+		return ctrl.Result{}, client.IgnoreNotFound(err)
+	}
+
+	log = log.WithValues("dbType", timeseriesdb.Spec.DBType, "replicas", timeseriesdb.Spec.Replicas)
+
+	if timeseriesdb.Status.Status == "" || timeseriesdb.Status.Message == "" {
+		timeseriesdb.Status = operatorv1.TimeseriesDBStatus{Status: "Initialized", Message: "Database creation is in progress"}
+		err := r.Status().Update(ctx, timeseriesdb)
+		if err != nil {
+			log.Error(err, "status update failed")
+			return ctrl.Result{}, err
+		}
+		log.Info("status updated")
+	}
 
 	return ctrl.Result{}, nil
 }
