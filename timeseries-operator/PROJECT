@@ -1,0 +1,6 @@
+domain: qinkeith.com
+layout:
+- go.kubebuilder.io/v3
+projectName: timeseries-operator
+repo: qinkeith.com/operators/timeseries-operator
+version: "3"
