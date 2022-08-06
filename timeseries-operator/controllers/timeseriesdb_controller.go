@@ -47,10 +47,10 @@ type TimeseriesDBReconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.12.2/pkg/reconcile
 func (r *TimeseriesDBReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = log.FromContext(ctx)
+	//_ = log.FromContext(ctx)
+	log := log.FromContext(ctx)
 
-	ctx := context.Background()
-	log := r.Log.WithValues("timeseriesdb", req.NamespacedName)
+	log = log.WithValues("timeseriesdb", req.NamespacedName)
 
 	timeseriesdb := new(operatorv1.TimeseriesDB)
 
