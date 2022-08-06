@@ -3,4 +3,5 @@ kind: TimeseriesDB
 metadata:
   name: timeseriesdb-sample
 spec:
-  # TODO(user): Add fields here
+  dbType: Prometheus
+  replicas: 1
