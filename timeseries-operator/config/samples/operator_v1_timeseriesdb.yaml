@@ -4,4 +4,4 @@ metadata:
   name: timeseriesdb-sample
 spec:
   dbType: Prometheus
-  replicas: 1
+  replicas: 2

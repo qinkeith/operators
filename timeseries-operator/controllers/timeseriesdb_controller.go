@@ -24,6 +24,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
+	corev1 "k8s.io/api/core/v1"
 	operatorv1 "qinkeith.com/operators/timeseries-operator/api/v1"
 )
 
@@ -53,6 +54,8 @@ func (r *TimeseriesDBReconciler) Reconcile(ctx context.Context, req ctrl.Request
 	log = log.WithValues("timeseriesdb", req.NamespacedName)
 
 	timeseriesdb := new(operatorv1.TimeseriesDB)
+
+	log = log.WithValues("ConfigMap", corev1.ConfigMap)
 
 	if err := r.Client.Get(ctx, req.NamespacedName, timeseriesdb); err != nil {
 		return ctrl.Result{}, client.IgnoreNotFound(err)
