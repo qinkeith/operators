@@ -6,4 +6,14 @@ plugins:
   scorecard.sdk.operatorframework.io/v2: {}
 projectName: clair-operator
 repo: github.com/qinkeith/operators/clair-opertor
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: qinkeith.com
+  group: core
+  kind: Scanner
+  path: github.com/qinkeith/operators/clair-opertor/api/v1alpha1
+  version: v1alpha1
 version: "3"

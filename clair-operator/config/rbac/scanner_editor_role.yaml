@@ -1,0 +1,24 @@
+# permissions for end users to edit scanners.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: scanner-editor-role
+rules:
+- apiGroups:
+  - core.qinkeith.com
+  resources:
+  - scanners
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - core.qinkeith.com
+  resources:
+  - scanners/status
+  verbs:
+  - get

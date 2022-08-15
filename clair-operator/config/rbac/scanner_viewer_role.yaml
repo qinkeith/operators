@@ -1,0 +1,20 @@
+# permissions for end users to view scanners.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: scanner-viewer-role
+rules:
+- apiGroups:
+  - core.qinkeith.com
+  resources:
+  - scanners
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - core.qinkeith.com
+  resources:
+  - scanners/status
+  verbs:
+  - get

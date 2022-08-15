@@ -11,10 +11,10 @@
 operator-sdk init --repo github.com/qinkeith/operators/clair-opertor --domain qinkeith.com
 ```
 
-2. Scafolding the API
+2. Scafolding the API in group core and version vaalpha1
 
 ```sh
-operator-sdk create api --group core --version v1alpha1 --kind Template --resource --controller
+operator-sdk create api --group core --version v1alpha1 --kind Scanner --resource --controller
 ``` 
 
 ## Getting Started

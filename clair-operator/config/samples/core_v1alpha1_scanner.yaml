@@ -1,0 +1,6 @@
+apiVersion: core.qinkeith.com/v1alpha1
+kind: Scanner
+metadata:
+  name: scanner-sample
+spec:
+  # TODO(user): Add fields here
