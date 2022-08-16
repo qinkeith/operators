@@ -58,5 +58,17 @@ func (r *ScannerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 func (r *ScannerReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&corev1alpha1.Scanner{}).
+	        Watches(&source.Kind{Type: &corev1.Pod{}},
+                    handler.EnqueueRequestsFromMapFunc(
+	            func(pod client.Object) []reconcile.Request {
+	                return []reconcile.Request{
+	                    {NamespacedName: types.NamespacedName{
+	                        Name:      pod.GetName(),
+		                Namespace: pod.GetNamespace(),
+		             }},
+	                 }
+	             },
+	             ),
+                ).
 		Complete(r)
 }

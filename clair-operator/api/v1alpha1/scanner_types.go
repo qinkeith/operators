@@ -25,11 +25,10 @@ import (
 
 // ScannerSpec defines the desired state of Scanner
 type ScannerSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-
-	// Foo is an example field of Scanner. Edit scanner_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+  Backend         string `json:"backend,omitempty"`
+  ClairBaseUrl    string `json:"clairBaseUrl,omitempty"`
+  SlackWebhookUrl string `json:"slackWebhookUrl,omitempty"`
+  Notifier        string `json:"notifier,omitempty"`
 }
 
 // ScannerStatus defines the observed state of Scanner
