@@ -9,10 +9,17 @@
 ## Setting up operator-sdk on WLS Ubuntu
 
 - Install Ubuntu 22.04 LTS from Microsoft app store
-- Run `suso apt upgrade`
+- Run `sudo apt upgrade`
 - Install go: `sudo apt install golang-go`
 - Install make: `sudo apt install make`
 - Checkout operator-sdk `git clone https://github.com/operator-framework/operator-sdk.git`
+
+## Building operator-sdk
+
+- cd into operator-sdk and run `make`
+- binaries are created under `./build`
+- run `make install`
+- installs to `$GOPATH/bin`
 
 ## Setting up minikube for WSL ubuntu
 - Go to Docker Desktop->Settings->Resources->WSL Integration
@@ -22,11 +29,6 @@
 - `sudo usermod -aG docker $USER && newgrp docker`
 - Run: `sudo usermod -aG docker $USER && newgrp docker`
 - Start `./minikube start`
-
-## Building operator-sdk
-
-- cd into operator-sdk and run `make install`
-- binaries are created under `./build`
 
 ## Creating nginx-operator
 - mkdir nginx-operator and cd into it
