@@ -24,4 +24,28 @@
 
 ## Configure the image regisrty
 
+- Make changes to Makefile to match docker hub settings
+- build and push to docker hub
+  
+  ```sh
+  make docker-build docker-push
+  ```
 
+## Create the memcached CR
+
+```sh
+kubectl apply -f config/samples/cache_v1alpha1_memcached.yaml
+```
+
+## Deploy the operator
+
+```sh
+make deploy
+```
+
+## Verify the custom resource is created
+
+- check memcached CR: `kubectl get memcached/memcached-sample -o yaml`
+- There shouold be a new namespace similar to `ansible-system`: ``kubectl get ns`
+- A new custom resource should be created: `kubectl api-resource | grep memcached`
+- `kubectl get deploy -n ansible-system`
