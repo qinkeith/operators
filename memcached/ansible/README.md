@@ -16,11 +16,11 @@
 
 ## Update the controller manager
 
-- Add ansible role for the memcached deployment to `roles/memcached/tasks/main.yml`. This role ensures
+- Add ansible role for the memcached deployment to [roles/memcached/tasks/main.yml](./roles/memcached/tasks/main.yml). This role ensures
   - Memcached deployment exists
   - Deployment size
-- Set default values in `roles/memcached/defaults/main.yml`, in our case: `size: 1`
-- Add size in `config/samples/cache_v1alpha1_memcached.yaml`, `size: 2`
+- Set default values in [roles/memcached/defaults/main.yml](./roles/memcached/defaults/main.yml), in our case: `size: 1`
+- Add size in [config/samples/cache_v1alpha1_memcached.yaml](./config/samples/cache_v1alpha1_memcached.yaml), `size: 2`
 
 ## Configure the image regisrty
 
