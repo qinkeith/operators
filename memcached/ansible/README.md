@@ -95,7 +95,7 @@ Namespace and deployment are specified in [config/default/kustomization.yaml](./
 ## Verify the custom resource is created
 
 - check memcached CR: `kubectl get memcached/memcached-sample -o yaml`
-- There shouold be a new namespace similar to `ansible-system`: ``kubectl get ns`
+- There shouold be a new namespace similar to `ansible-system`: `kubectl get ns`
 - A new custom resource should be created: `kubectl api-resource | grep memcached`
 - `kubectl get deploy -n ansible-system`
 
