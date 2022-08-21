@@ -29,7 +29,7 @@ BUNDLE_METADATA_OPTS ?= $(BUNDLE_CHANNELS) $(BUNDLE_DEFAULT_CHANNEL)
 #
 # For example, running 'make bundle-build bundle-push catalog-build catalog-push' will build and push both
 # qinkeith.com/ansible-bundle:$VERSION and qinkeith.com/ansible-catalog:$VERSION.
-IMAGE_TAG_BASE ?= qinkeith.com/ansible
+IMAGE_TAG_BASE ?= qinkeith/ansible
 
 # BUNDLE_IMG defines the image:tag used for the bundle.
 # You can use it as an arg. (E.g make bundle-build BUNDLE_IMG=<some-registry>/<project-name-bundle>:<tag>)
@@ -48,7 +48,7 @@ endif
 
 # Image URL to use all building/pushing image targets
 #IMG ?= controller:latest
-IMG ?= memcached-$(IMAGE_TAG_BASE)-operator:$(VERSION)
+IMG ?= $(IMAGE_TAG_BASE)-memcached-operator:$(VERSION)
 
 .PHONY: all
 all: docker-build
