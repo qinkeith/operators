@@ -47,7 +47,8 @@ ifeq ($(USE_IMAGE_DIGESTS), true)
 endif
 
 # Image URL to use all building/pushing image targets
-IMG ?= controller:latest
+#IMG ?= controller:latest
+IMG ?= memcached-$(IMAGE_TAG_BASE)-operator:$(VERSION)
 
 .PHONY: all
 all: docker-build
