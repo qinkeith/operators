@@ -25,10 +25,10 @@ import (
 
 // ScannerSpec defines the desired state of Scanner
 type ScannerSpec struct {
-  Backend         string `json:"backend,omitempty"`
-  ClairBaseUrl    string `json:"clairBaseUrl,omitempty"`
-  SlackWebhookUrl string `json:"slackWebhookUrl,omitempty"`
-  Notifier        string `json:"notifier,omitempty"`
+	Backend         string `json:"backend,omitempty"`
+	ClairBaseUrl    string `json:"clairBaseUrl,omitempty"`
+	SlackWebhookUrl string `json:"slackWebhookUrl,omitempty"`
+	Notifier        string `json:"notifier,omitempty"`
 }
 
 // ScannerStatus defines the observed state of Scanner
