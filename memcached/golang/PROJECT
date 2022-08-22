@@ -1,0 +1,19 @@
+domain: qinkeith.com
+layout:
+- go.kubebuilder.io/v3
+plugins:
+  manifests.sdk.operatorframework.io/v2: {}
+  scorecard.sdk.operatorframework.io/v2: {}
+projectName: golang
+repo: github.com/qinkeith/operators/memcached/golang
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: qinkeith.com
+  group: cache
+  kind: Memcached
+  path: github.com/qinkeith/operators/memcached/golang/api/v1alpha1
+  version: v1alpha1
+version: "3"
