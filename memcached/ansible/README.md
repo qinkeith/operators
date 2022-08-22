@@ -32,6 +32,34 @@
   make docker-build docker-push
   ```
 
+## Deploy the operator
+
+```sh
+make deploy
+```
+
+This creates a new namespace and deeployment including the operator, in our case `ansible-system` and `ansible-controller-manager`.
+
+Makefile uses `kustomize` to apply custom configurations and generate manifests from the config/ directory, which are piped to kubectl.
+
+```sh
+kustomize build config/default | kubectl apply -f -
+```
+
+Namespace and deployment are specified in [config/default/kustomization.yaml](./config/default/kustomization.yaml) and [config/default/manager_config_patch.yaml](./config/default/manager_config_patch.yaml) 
+
+## Verify the custom resource is created
+
+- There shouold be a new namespace similar to `ansible-system`: `kubectl get ns`
+- A new custom resource should be created: `kubectl api-resources | grep memcached`
+
+  ```log
+  NAME                              SHORTNAMES   APIVERSION                             NAMESPACED   KIND
+  memcacheds                                     cache.qinkeith.com/v1alpha1            true         Memcached
+  ```
+
+- `kubectl get deploy -n ansible-system`
+
 ## Create the memcached CR
 
 ```sh
@@ -75,35 +103,21 @@ NAME                                   READY   UP-TO-DATE   AVAILABLE   AGE
 ansible-controller-manager-memcached   3/3     3            3           6m9s
 ```
 
-## Deploy the operator
-
-
-```sh
-make deploy
-```
-
-This creates a new namespace and deeployment, in our case `ansible-system` and 'ansible-controller-manager`.
-
-Makefile uses `kustomize` to apply custom configurations and generate manifests from the config/ directory, which are piped to kubectl.
-
-```sh
-kustomize build config/default | kubectl apply -f -
-```
-
-Namespace and deployment are specified in [config/default/kustomization.yaml](./config/default/kustomization.yaml) and [config/default/manager_config_patch.yaml](./config/default/manager_config_patch.yaml) 
-
-## Verify the custom resource is created
-
-- check memcached CR: `kubectl get memcached/memcached-sample -o yaml`
-- There shouold be a new namespace similar to `ansible-system`: `kubectl get ns`
-- A new custom resource should be created: `kubectl api-resource | grep memcached`
-- `kubectl get deploy -n ansible-system`
-
 ## Update memcached CR
 
-- change size `kubectl patch memcached ansible-controller-manager -p '{"spec":{"size": 2}}' --type=merge`
-- run: `kubectl get deploy` to verifiy the changes:
+- Change size `kubectl patch memcached ansible-controller-manager -p '{"spec":{"size": 2}}' --type=merge`
+- Verifiy the changes:
+
   ```sh
+  kubectl get deploy
+
   NAME                                   READY   UP-TO-DATE   AVAILABLE   AGE
   ansible-controller-manager-memcached   2/2     2            2           41m
   ```
+
+## Clean up
+
+```bash
+kubectl delete -f config/samples/cache_v1alpha1_memcached.yaml
+make undeploy
+```
