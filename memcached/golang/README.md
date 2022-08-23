@@ -32,6 +32,11 @@ operator-sdk create api --group cache --version v1alpha1 --kind Memcached --reso
   ```bash
   make generate
   ```
+- Create the CRD manifests at [config/crd/bases/cache.qinkeith.com_memcacheds.yaml](./config/crd/bases/cache.qinkeith.com_memcacheds.yaml) by running
+
+  ```bash
+  make manifests
+  ```
 
 ## Getting Started
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
