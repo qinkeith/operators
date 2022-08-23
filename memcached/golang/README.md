@@ -7,11 +7,9 @@
 ## Create the API
 
 - Initialize the project
-
 ```bash
 operator-sdk init --domain qinkeith.com --repo github.com/qinkeith/operators/memcached/golang
 ```
-
   - `--repo=` is required when creating a project outsile of `$GOPATH/src` as scaffolding api needs a valid module path
   - [go.mod](./go.mod): used to work with Go modules
   - [Makefilei](./Makefile): Make targets for building/deploying your controller
@@ -21,22 +19,18 @@ operator-sdk init --domain qinkeith.com --repo github.com/qinkeith/operators/mem
     - [Schema](https://book.kubebuilder.io/cronjob-tutorial/gvks.html#err-but-whats-that-scheme-thing): provides mappings between Kinds and their corresponding Go types. 
 
 - Scalfold the API
-
 ```bash
 operator-sdk create api --group cache --version v1alpha1 --kind Memcached --resource --controller
 ```
-
-- Modify [api/v1alpha1/memcached_types.go](./api/v1alpha1/memcached_types.go) to add `size` and  `nodes` to `Spec` and `Status`
-- Update `zz_generated.deepcopy.go` by running
-
-  ```bash
-  make generate
-  ```
-- Create the CRD manifests at [config/crd/bases/cache.qinkeith.com_memcacheds.yaml](./config/crd/bases/cache.qinkeith.com_memcacheds.yaml) by running
-
-  ```bash
-  make manifests
-  ```
+  - Modify [api/v1alpha1/memcached_types.go](./api/v1alpha1/memcached_types.go) to add `size` and  `nodes` to `Spec` and `Status`
+  - Update `zz_generated.deepcopy.go` by running
+    ```bash
+    make generate
+    ```
+  - Create the CRD manifests at [config/crd/bases/cache.qinkeith.com_memcacheds.yaml](./config/crd/bases/cache.qinkeith.com_memcacheds.yaml) by running
+    ```bash
+    make manifests
+    ```
 
 ## Getting Started
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
