@@ -12,6 +12,14 @@
 operator-sdk init --domain qinkeith.com --repo github.com/qinkeith/operators/memcached/golang
 ```
 
+  - `--repo=` is required when creating a project outsile of `$GOPATH/src` as scaffolding api needs a valid module path
+  - [go.mod](./go.mod): used to work with Go modules
+  - [Makefilei](./Makefile): Make targets for building/deploying your controller
+  - [PROJECT](./PROJECT): Metadata for scaffolding new components
+  - [main.go](./main.go): the entrypoint of your controller
+    - imports [controller-runtime library](https://pkg.go.dev/sigs.k8s.io/controller-runtime) and it's logging
+    - [Schema](https://book.kubebuilder.io/cronjob-tutorial/gvks.html#err-but-whats-that-scheme-thing): provides mappings between Kinds and their corresponding Go types. 
+
 - Scalfold the API
 
 ```bash
@@ -96,6 +104,13 @@ make manifests
 **NOTE:** Run `make --help` for more information on all potential `make` targets
 
 More information can be found via the [Kubebuilder Documentation](https://book.kubebuilder.io/introduction.html)
+
+## Resources
+
+- [Go Operator Tutorial: memcached-operator](https://sdk.operatorframework.io/docs/building-operators/golang/tutorial/)
+- [Tutorial: Building CronJob](https://book-v2.book.kubebuilder.io/cronjob-tutorial/cronjob-tutorial.html)
+- [Explanation of Memcached operator code](https://developer.ibm.com/learningpaths/kubernetes-operators/develop-deploy-simple-operator/deep-dive-memcached-operator-code/) and it's [GitHub repo](https://github.com/IBM/create-and-deploy-memcached-operator-using-go)
+- [Initialize and Create an API](https://kubebyexample.com/learning-paths/operator-framework/operator-sdk-go/initialize-and-create-api)
 
 ## License
 
