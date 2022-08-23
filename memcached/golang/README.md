@@ -7,9 +7,9 @@
 ## Create the API
 
 - Initialize the project
-```bash
-operator-sdk init --domain qinkeith.com --repo github.com/qinkeith/operators/memcached/golang
-```
+  ```bash
+  operator-sdk init --domain qinkeith.com --repo github.com/qinkeith/operators/memcached/golang
+  ```
   - `--repo=` is required when creating a project outsile of `$GOPATH/src` as scaffolding api needs a valid module path
   - [go.mod](./go.mod): used to work with Go modules
   - [Makefilei](./Makefile): Make targets for building/deploying your controller
