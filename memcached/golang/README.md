@@ -19,9 +19,9 @@
     - [Schema](https://book.kubebuilder.io/cronjob-tutorial/gvks.html#err-but-whats-that-scheme-thing): provides mappings between Kinds and their corresponding Go types. 
 
 - Scalfold the API
-```bash
-operator-sdk create api --group cache --version v1alpha1 --kind Memcached --resource --controller
-```
+  ```bash
+  operator-sdk create api --group cache --version v1alpha1 --kind Memcached --resource --controller
+  ```
   - Modify [api/v1alpha1/memcached_types.go](./api/v1alpha1/memcached_types.go) to add `size` and  `nodes` to `Spec` and `Status`
   - Update `zz_generated.deepcopy.go` by running
     ```bash
