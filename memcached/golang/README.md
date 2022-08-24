@@ -23,14 +23,8 @@
   operator-sdk create api --group cache --version v1alpha1 --kind Memcached --resource --controller
   ```
   - Modify [api/v1alpha1/memcached_types.go](./api/v1alpha1/memcached_types.go) to add `size` and  `nodes` to `Spec` and `Status`
-  - Generate code for DeepCopy:. [zz_generated.deepcopy.go](api/v1alpha1/zz_generated.deepcopy.go) by running
-    ```bash
-    [make generate](https://github.com/qinkeith/operators/blob/main/memcached/golang/Makefile#L93)
-    ```
-  - Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects for the CRD at [config/crd/bases/cache.qinkeith.com_memcacheds.yaml](./config/crd/bases/cache.qinkeith.com_memcacheds.yaml) by running
-    ```bash
-    [make manifests](./Makefile#L89)
-    ```
+  - Generate code for DeepCopy:. [zz_generated.deepcopy.go](api/v1alpha1/zz_generated.deepcopy.go) by running [make generate](https://github.com/qinkeith/operators/blob/main/memcached/golang/Makefile#L93)
+  - Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects for the CRD at [config/crd/bases/cache.qinkeith.com_memcacheds.yaml](./config/crd/bases/cache.qinkeith.com_memcacheds.yaml) by running [make manifests](./Makefile#L89)
   
   Note, both `make generate` and `make manifests` will call `[controller-gen](https://github.com/kubernetes-sigs/controller-tools)` utility.
 
