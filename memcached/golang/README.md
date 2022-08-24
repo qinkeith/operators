@@ -23,14 +23,18 @@
   operator-sdk create api --group cache --version v1alpha1 --kind Memcached --resource --controller
   ```
   - Modify [api/v1alpha1/memcached_types.go](./api/v1alpha1/memcached_types.go) to add `size` and  `nodes` to `Spec` and `Status`
-  - Update `zz_generated.deepcopy.go` by running
+  - Generate code for DeepCopy:. [zz_generated.deepcopy.go](api/v1alpha1/zz_generated.deepcopy.go) by running
     ```bash
-    make generate
+    [make generate](https://github.com/qinkeith/operators/blob/main/memcached/golang/Makefile#L93)
     ```
-  - Create the CRD manifests at [config/crd/bases/cache.qinkeith.com_memcacheds.yaml](./config/crd/bases/cache.qinkeith.com_memcacheds.yaml) by running
+  - Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects for the CRD at [config/crd/bases/cache.qinkeith.com_memcacheds.yaml](./config/crd/bases/cache.qinkeith.com_memcacheds.yaml) by running
     ```bash
-    make manifests
+    [make manifests](./Makefile#L89)
     ```
+  
+  Note, both `make generate` and `make manifests` will call `[controller-gen](https://github.com/kubernetes-sigs/controller-tools)` utility.
+
+- Implement the Controllert
 
 ## Getting Started
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
