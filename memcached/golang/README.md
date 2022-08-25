@@ -23,10 +23,17 @@
   operator-sdk create api --group cache --version v1alpha1 --kind Memcached --resource --controller
   ```
   - Modify [api/v1alpha1/memcached_types.go](./api/v1alpha1/memcached_types.go) to add `size` and  `nodes` to `Spec` and `Status`
-  - Generate code for DeepCopy:. [zz_generated.deepcopy.go](api/v1alpha1/zz_generated.deepcopy.go) by running [make generate](https://github.com/qinkeith/operators/blob/main/memcached/golang/Makefile#L93)
+  - Generate code for DeepCopy:. [zz_generated.deepcopy.go](api/v1alpha1/zz_generated.deepcopy.go) by running [make generate](./Makefile#L93)
   - Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects for the CRD at [config/crd/bases/cache.qinkeith.com_memcacheds.yaml](./config/crd/bases/cache.qinkeith.com_memcacheds.yaml) by running [make manifests](./Makefile#L89)
+    - The controller needs certain RBAC permissions to interact with the resources it manages. These are specified via RBAC markers like the following:
+      ```marker
+      //+kubebuilder:rbac:groups=cache.qinkeith.com,resources=memcacheds,verbs=get;list;watch;create;update;patch;delete
+      //+kubebuilder:rbac:groups=cache.qinkeith.com,resources=memcacheds/status,verbs=get;update;patch
+      //+kubebuilder:rbac:groups=cache.qinkeith.com,resources=memcacheds/finalizers,verbs=update
+      ```
+       in controllers/memcached_controller.go. `make manifest` creates the ClusterRole manifest at [config/rbac/role.yaml](./config/rbac/role.yaml) 
   
-  Note, both `make generate` and `make manifests` will call `[controller-gen](https://github.com/kubernetes-sigs/controller-tools)` utility.
+  Note, both `make generate` and `make manifests` will call [controller-gen](https://github.com/kubernetes-sigs/controller-tools) utility.
 
 - Implement the Controllert
 
