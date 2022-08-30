@@ -55,7 +55,7 @@
     ```golang
     memcached := &cachev1alpha1.Memcached{}
     err := r.Get(ctx, req.NamespacedName, memcached)
-   ```
+    ```
 
 
 ## Getting Started
