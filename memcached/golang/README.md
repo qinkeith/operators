@@ -35,7 +35,28 @@
   
   Note, both `make generate` and `make manifests` will call [controller-gen](https://github.com/kubernetes-sigs/controller-tools) utility.
 
-- Implement the Controllert
+- Implement the Controller
+  - Reference the instance you want to observe. In our case, it's the Memcached object definded in [api/v1alpha1/memcached_types.go](https://github.com/qinkeith/operators/blob/main/memcached/golang/api/v1alpha1/memcached_types.go#L43). This can be achieved by importing the Memcached CRD from the `cachev1alpha1` object:
+    
+    ```golang
+      import (
+        ...
+        cachev1alpha1 "github.com/qinkeith/operators/memcached/golang/api/v1alpha1"
+      )	
+    ```
+   
+    `cachev1alpha1.<Object>{}` can be used to reference any of the defined objects within that memcached_types.go. For example:
+
+    ```golang
+    memcached := &cachev1alpha1.Memcached{}
+    ``` 
+  - The `Get` function - Use it to confirm that the observed resource, Memcached in our case, is defined in the namespace:
+
+    ```golang
+    memcached := &cachev1alpha1.Memcached{}
+    err := r.Get(ctx, req.NamespacedName, memcached)
+   ```
+
 
 ## Getting Started
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
