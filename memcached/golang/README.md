@@ -50,6 +50,23 @@
     ```golang
     memcached := &cachev1alpha1.Memcached{}
     ``` 
+  
+  - The `Reconcile` function - 
+
+    ```golang
+    func (r *MemcachedReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error)
+    ```
+
+    This function expects:
+  
+    - [Context](https://go.dev/blog/context): The context carries a deadline, a cancellation signal, and other values across API boundaries. The context       takes into account the identity of the end user, auth tokens, and the request's deadline. To view your current context:
+        
+        ```bash
+        kubectl config view
+        ```
+
+    - [Request](https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.7.0/pkg/reconcile#Request): Request contains the information necessary to reconcile a     Kubernetes object. This includes the information to uniquely identify the object - its Name and Namespace.
+
   - The `Get` function - Use it to confirm that the observed resource, Memcached in our case, is defined in the namespace:
 
     ```golang
@@ -57,6 +74,8 @@
     err := r.Get(ctx, req.NamespacedName, memcached)
     ```
 
+    We aleady know the first 2 parameters, `context` and `request`. The `req` struct contains the `NamespacedName` which is the name and the namespace 
+    of the object to reconcile. In our case, that is the memcached object.
 
 ## Getting Started
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
