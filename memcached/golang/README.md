@@ -51,7 +51,12 @@
     memcached := &cachev1alpha1.Memcached{}
     ``` 
   
-  - The `Reconcile` function - 
+  - The [Reconcile](https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/reconcile) function - The reconcile function is responsible for enforcing the 
+  desired CR state on the actual state of the system. It runs each time an event occurs on a watched CR or resource, and will return some value 
+  depending on whether those states match or not.
+
+  In this way, every Controller has a Reconciler object with a Reconcile() method that implements the reconcile loop. The reconcile loop is passed 
+  the Request argument which is a Namespace/Name key used to lookup the primary resource object, Memcached, from the cache: 
 
     ```golang
     func (r *MemcachedReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error)
@@ -67,6 +72,25 @@
 
     - [Request](https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.7.0/pkg/reconcile#Request): Request contains the information necessary to reconcile a     Kubernetes object. This includes the information to uniquely identify the object - its Name and Namespace.
 
+    The following are a few possible return options for a Reconciler:
+    - with error:
+      
+      ```golang
+      return ctrl.Result{}, err
+      ```
+
+    - without error, but reqeue request:
+      
+      ```golang
+      return ctrl.Result{Reqeue: true}, nil 
+      ```
+
+    - to stop the Reconcile:
+      
+      ```golang
+      return ctrl.Result{}, nil 
+      ```
+
   - The `Get` function - Use it to confirm that the observed resource, Memcached in our case, is defined in the namespace:
 
     ```golang
@@ -76,6 +100,8 @@
 
     We aleady know the first 2 parameters, `context` and `request`. The `req` struct contains the `NamespacedName` which is the name and the namespace 
     of the object to reconcile. In our case, that is the memcached object.
+
+  - The `List` function - Use List function to list all child objects
 
 ## Getting Started
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
@@ -155,6 +181,7 @@ More information can be found via the [Kubebuilder Documentation](https://book.k
 - [Tutorial: Building CronJob](https://book-v2.book.kubebuilder.io/cronjob-tutorial/cronjob-tutorial.html)
 - [Explanation of Memcached operator code](https://developer.ibm.com/learningpaths/kubernetes-operators/develop-deploy-simple-operator/deep-dive-memcached-operator-code/) and it's [GitHub repo](https://github.com/IBM/create-and-deploy-memcached-operator-using-go)
 - [Initialize and Create an API](https://kubebyexample.com/learning-paths/operator-framework/operator-sdk-go/initialize-and-create-api)
+- [Implement the controller](https://book-v2.book.kubebuilder.io/cronjob-tutorial/controller-implementation.html)
 
 ## License
 
