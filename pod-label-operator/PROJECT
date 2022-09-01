@@ -1,0 +1,9 @@
+domain: qinkeith.io
+layout:
+- go.kubebuilder.io/v3
+plugins:
+  manifests.sdk.operatorframework.io/v2: {}
+  scorecard.sdk.operatorframework.io/v2: {}
+projectName: pod-label-operator
+repo: github.com/qinkeith/operators/pod-label-operator
+version: "3"
