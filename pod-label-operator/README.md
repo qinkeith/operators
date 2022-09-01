@@ -16,6 +16,12 @@
   operator-sdk init --domain qinkeith.com --repo github.com/qinkeith/operators/pod-label-opertor
   ```
 
+- Scalfold the API
+
+  ```bash
+  operator-sdk create api --group core --version v1 --kind PodLabel --controller --resource
+  ```
+
 ## Getting Started
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
 **Note:** Your controller will automatically use the current context in your kubeconfig file (i.e. whatever cluster `kubectl cluster-info` shows).

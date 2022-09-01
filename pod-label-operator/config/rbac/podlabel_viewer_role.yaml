@@ -1,0 +1,20 @@
+# permissions for end users to view podlabels.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: podlabel-viewer-role
+rules:
+- apiGroups:
+  - core.qinkeith.io
+  resources:
+  - podlabels
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - core.qinkeith.io
+  resources:
+  - podlabels/status
+  verbs:
+  - get

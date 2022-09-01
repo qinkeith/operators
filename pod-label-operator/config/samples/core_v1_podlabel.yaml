@@ -1,0 +1,6 @@
+apiVersion: core.qinkeith.io/v1
+kind: PodLabel
+metadata:
+  name: podlabel-sample
+spec:
+  # TODO(user): Add fields here

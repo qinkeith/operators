@@ -1,0 +1,24 @@
+# permissions for end users to edit podlabels.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: podlabel-editor-role
+rules:
+- apiGroups:
+  - core.qinkeith.io
+  resources:
+  - podlabels
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - core.qinkeith.io
+  resources:
+  - podlabels/status
+  verbs:
+  - get
