@@ -54,57 +54,57 @@
   - The [Reconcile](https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/reconcile) method - The Reconcile [method](https://go.dev/tour/methods/1) is 
   a function with MemcachedReconciler as it's receiver:
 
-  ```golang
-  type MemcachedReconciler struct {
-        client.Client
-        Scheme *runtime.Scheme
-  }
+    ```golang
+    type MemcachedReconciler struct {
+          client.Client
+          Scheme *runtime.Scheme
+    }
 
-  func (r *MemcachedReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error)
-  ...
-  ```
-  
-  In Go, a function which takes a receiver is usually called a method of the type (receiver). In our case, Reconcile is a method of MemcachedReconciler. 
-  We can make calls such as:
+    func (r *MemcachedReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error)
+    ...
+    ```
+    
+    In Go, a function which takes a receiver is usually called a method of the type (receiver). In our case, Reconcile is a method of MemcachedReconciler. 
+    We can make calls such as:
 
-  ```golang
-  dep := r.deploymentForMemcached(memcached)
-  ```
+    ```golang
+    dep := r.deploymentForMemcached(memcached)
+    ```
 
-  Reconcile method is responsible for enforcing the 
-  desired CR state on the actual state of the system. It runs each time an event occurs on a watched CR or resource, and will return some value 
-  depending on whether those states match or not.
+    Reconcile method is responsible for enforcing the 
+    desired CR state on the actual state of the system. It runs each time an event occurs on a watched CR or resource, and will return some value 
+    depending on whether those states match or not.
 
-  In this way, every Controller has a Reconciler object with a Reconcile() method that implements the reconcile loop. The reconcile loop is passed 
-  the Request argument which is a Namespace/Name key used to lookup the primary resource object, Memcached, from the cache.
+    In this way, every Controller has a Reconciler object with a Reconcile() method that implements the reconcile loop. The reconcile loop is passed 
+    the Request argument which is a Namespace/Name key used to lookup the primary resource object, Memcached, from the cache.
 
-  This function expects:
-    - [Context](https://go.dev/blog/context): The context carries a deadline, a cancellation signal, and other values across API boundaries. The context       takes into account the identity of the end user, auth tokens, and the request's deadline. To view your current context:
+    This function expects:
+      - [Context](https://go.dev/blog/context): The context carries a deadline, a cancellation signal, and other values across API boundaries. The context       takes into account the identity of the end user, auth tokens, and the request's deadline. To view your current context:
+          
+          ```bash
+          kubectl config view
+          ```
+
+      - [Request](https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.7.0/pkg/reconcile#Request): Request contains the information necessary to reconcile a     Kubernetes object. This includes the information to uniquely identify the object - its Name and Namespace.
+
+      The following are a few possible return options for a Reconciler:
+      - with error:
         
-        ```bash
-        kubectl config view
+        ```golang
+        return ctrl.Result{}, err
         ```
 
-    - [Request](https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.7.0/pkg/reconcile#Request): Request contains the information necessary to reconcile a     Kubernetes object. This includes the information to uniquely identify the object - its Name and Namespace.
+      - without error, but reqeue request:
+        
+        ```golang
+        return ctrl.Result{Reqeue: true}, nil 
+        ```
 
-    The following are a few possible return options for a Reconciler:
-    - with error:
-      
-      ```golang
-      return ctrl.Result{}, err
-      ```
-
-    - without error, but reqeue request:
-      
-      ```golang
-      return ctrl.Result{Reqeue: true}, nil 
-      ```
-
-    - to stop the Reconcile:
-      
-      ```golang
-      return ctrl.Result{}, nil 
-      ```
+      - to stop the Reconcile:
+        
+        ```golang
+        return ctrl.Result{}, nil 
+        ```
 
   - The client [Reader](https://github.com/kubernetes-sigs/controller-runtime/blob/v0.7.0/pkg/client/interfaces.go#L48) interface. Reader knows how to read and list Kubernetes objects. 
     - The [Get](https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.7.0/pkg/client#Reader.Get) function - Use it to confirm that the observed resource, Memcached in our case, is defined in the namespace:
