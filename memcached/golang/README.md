@@ -22,9 +22,38 @@
   ```bash
   operator-sdk create api --group cache --version v1alpha1 --kind Memcached --resource --controller
   ```
-  - Modify [api/v1alpha1/memcached_types.go](./api/v1alpha1/memcached_types.go) to add `size` and  `nodes` to `Spec` and `Status`
+  - Modify [api/v1alpha1/memcached_types.go](./api/v1alpha1/memcached_types.go) to add `size` and  `nodes` to `Spec` and `Status`:
+
+    ```golang
+    type MemcachedSpec struct {
+      Size int32 `json:"size"`
+    }
+
+    type MemcachedStatus struct {
+      Nodes []string `json:"nodes"`
+    }
+
+    type Memcached struct {
+      metav1.TypeMeta   `json:",inline"`
+      metav1.ObjectMeta `json:"metadata,omitempty"`
+
+      Spec   MemcachedSpec   `json:"spec,omitempty"`
+      Status MemcachedStatus `json:"status,omitempty"`
+    }
+    ```
+
   - Generate code for DeepCopy:. [zz_generated.deepcopy.go](api/v1alpha1/zz_generated.deepcopy.go) by running [make generate](./Makefile#L93)
+
+    ```bash
+    make generate
+    ```
+
   - Generate WebhookConfiguration, ClusterRole and CustomResourceDefinition objects for the CRD at [config/crd/bases/cache.qinkeith.com_memcacheds.yaml](./config/crd/bases/cache.qinkeith.com_memcacheds.yaml) by running [make manifests](./Makefile#L89)
+    
+    ```bash
+    make manifests
+    ```
+
     - The controller needs certain RBAC permissions to interact with the resources it manages. These are specified via RBAC markers like the following:
       ```marker
       //+kubebuilder:rbac:groups=cache.qinkeith.com,resources=memcacheds,verbs=get;list;watch;create;update;patch;delete
@@ -129,6 +158,23 @@
 ## Getting Started
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
 **Note:** Your controller will automatically use the current context in your kubeconfig file (i.e. whatever cluster `kubectl cluster-info` shows).
+
+### Deploy the operator
+
+  ```bash
+  make deploy
+
+  kubectl apply -f config/samples/cache_v1alpha1_memcached.yaml
+  ```
+
+### Clean up
+
+  ```bash
+  kubectl delete -f config/samples/cache_v1alpha1_memcached.yaml
+
+  make undeploy
+  ```
+  
 
 ### Running on the cluster
 1. Install Instances of Custom Resources:

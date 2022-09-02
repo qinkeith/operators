@@ -137,7 +137,7 @@ func (r *MemcachedReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 			pod.Labels = make(map[string]string)
 		}
 		pod.Labels[podLabel] = pod.Name
-		l.Info("Added label for", pod.Name)
+		l.Info("Added label", "Pod.Name", pod.Name)
 		if err := r.Update(ctx, &pod); err != nil {
 			l.Error(err, "Failed to update for", pod.Name)
 			return ctrl.Result{}, err
