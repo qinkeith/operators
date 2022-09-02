@@ -51,7 +51,27 @@
     memcached := &cachev1alpha1.Memcached{}
     ``` 
   
-  - The [Reconcile](https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/reconcile) function - The reconcile function is responsible for enforcing the 
+  - The [Reconcile](https://pkg.go.dev/sigs.k8s.io/controller-runtime/pkg/reconcile) method - The Reconcile [method](https://go.dev/tour/methods/1) is 
+  a function with MemcachedReconciler as it's receiver:
+
+  ```golang
+  type MemcachedReconciler struct {
+        client.Client
+        Scheme *runtime.Scheme
+  }
+
+  func (r *MemcachedReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error)
+  ...
+  ```
+  
+  In Go, a function which takes a receiver is usually called a method of the type (receiver). In our case, Reconcile is a method of MemcachedReconciler. 
+  We can make calls such as:
+
+  ```golang
+  dep := r.deploymentForMemcached(memcached)
+  ```
+
+  Reconcile method is responsible for enforcing the 
   desired CR state on the actual state of the system. It runs each time an event occurs on a watched CR or resource, and will return some value 
   depending on whether those states match or not.
 
