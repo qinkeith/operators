@@ -79,7 +79,6 @@
   the Request argument which is a Namespace/Name key used to lookup the primary resource object, Memcached, from the cache.
 
   This function expects:
-  
     - [Context](https://go.dev/blog/context): The context carries a deadline, a cancellation signal, and other values across API boundaries. The context       takes into account the identity of the end user, auth tokens, and the request's deadline. To view your current context:
         
         ```bash
