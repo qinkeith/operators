@@ -91,28 +91,25 @@
       return ctrl.Result{}, nil 
       ```
 
-  - The [Get]((https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.7.0/pkg/client#Reader.Get) function - Use it to confirm that the observed resource, Memcached in our case, is defined in the namespace:
+  - The client [Reader](https://github.com/kubernetes-sigs/controller-runtime/blob/v0.7.0/pkg/client/interfaces.go#L48) interface. Reader knows how to read and list Kubernetes objects. 
+    - The [Get](https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.7.0/pkg/client#Reader.Get) function - Use it to confirm that the observed resource, Memcached in our case, is defined in the namespace:
 
-    ```golang
-    memcached := &cachev1alpha1.Memcached{}
-    err := r.Get(ctx, req.NamespacedName, memcached)
-    ```
+      ```golang
+      memcached := &cachev1alpha1.Memcached{}
+      err := r.Get(ctx, req.NamespacedName, memcached)
+      ```
 
-    We aleady know the first 2 parameters, `context` and `request`. The `req` struct contains the `NamespacedName` which is the name and the namespace 
-    of the object to reconcile. The object must be a struct pointer so that memcached can be updated with the response returned by the server. 
-    In our case, that is the memcached object which must be a struct pointer so that memcached can be updated with the content returned by the Server.
+      We aleady know the first 2 parameters, `context` and `request`. The `req` struct contains the `NamespacedName` which is the name and the namespace 
+      of the object to reconcile. The object must be a struct pointer so that memcached can be updated with the response returned by the server. 
+      In our case, that is the memcached object which must be a struct pointer so that memcached can be updated with the content returned by the Server.
 
-  - The [List](https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.7.0/pkg/client#Reader.List) function - List function can be used to retrieve a list all    child objects in a given namespace and list options. 
-    In our case, we use List to retrieve all [memcached pods](./controllers/memcached_controller.go#L115). On a successful call, `Items` field in the list 
-    will be populated with the result returned from the server:
+    - The [List](https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.7.0/pkg/client#Reader.List) function - List function can be used to retrieve a list all    child objects in a given namespace and list options. 
+      In our case, we use List to retrieve all [memcached pods](./controllers/memcached_controller.go#L115). On a successful call, `Items` field in the list 
+      will be populated with the result returned from the server:
   
-    ```golang
-    podNames := getPodNames(podList.Items)
-    ```
-
-  - Both `Get` and `List` are part of the client [Reader](https://github.com/kubernetes-sigs/controller-runtime/blob/v0.7.0/pkg/client/interfaces.go#L48) 
-    interface.
- 
+      ```golang
+      podNames := getPodNames(podList.Items)
+      ```
 
 ## Getting Started
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
