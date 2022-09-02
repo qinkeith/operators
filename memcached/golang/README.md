@@ -75,14 +75,10 @@
   desired CR state on the actual state of the system. It runs each time an event occurs on a watched CR or resource, and will return some value 
   depending on whether those states match or not.
 
-    In this way, every Controller has a Reconciler object with a Reconcile() method that implements the reconcile loop. The reconcile loop is passed 
-    the Request argument which is a Namespace/Name key used to lookup the primary resource object, Memcached, from the cache: 
+  In this way, every Controller has a Reconciler object with a Reconcile() method that implements the reconcile loop. The reconcile loop is passed 
+  the Request argument which is a Namespace/Name key used to lookup the primary resource object, Memcached, from the cache.
 
-      ```golang
-      func (r *MemcachedReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error)
-      ```
-
-      This function expects:
+  This function expects:
   
     - [Context](https://go.dev/blog/context): The context carries a deadline, a cancellation signal, and other values across API boundaries. The context       takes into account the identity of the end user, auth tokens, and the request's deadline. To view your current context:
         
