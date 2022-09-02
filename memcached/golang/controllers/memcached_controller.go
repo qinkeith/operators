@@ -33,6 +33,8 @@ import (
 	cachev1alpha1 "github.com/qinkeith/operators/memcached/golang/api/v1alpha1"
 )
 
+const podLabel = "qinkeith.com/pod-name"
+
 // MemcachedReconciler reconciles a Memcached object
 type MemcachedReconciler struct {
 	client.Client
@@ -116,6 +118,7 @@ func (r *MemcachedReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 		l.Error(err, "Failed to list pods", "Memcached.Namespace", memcached.Namespace, "Memcached.Name", memcached.Name)
 		return ctrl.Result{}, err
 	}
+
 	podNames := getPodNames(podList.Items)
 
 	// Update status.Nodes if needed
@@ -124,6 +127,19 @@ func (r *MemcachedReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 		err := r.Status().Update(ctx, memcached)
 		if err != nil {
 			l.Error(err, "Failed to update Memcached status")
+			return ctrl.Result{}, err
+		}
+	}
+
+	// Create labels for pods in the list
+	for _, pod := range podList.Items {
+		if pod.Labels == nil {
+			pod.Labels = make(map[string]string)
+		}
+		pod.Labels[podLabel] = pod.Name
+		l.Info("Added label for", pod.Name)
+		if err := r.Update(ctx, &pod); err != nil {
+			l.Error(err, "Failed to update for", pod.Name)
 			return ctrl.Result{}, err
 		}
 	}
