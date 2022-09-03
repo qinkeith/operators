@@ -1,5 +1,6 @@
-# golang
-// TODO(user): Add simple overview of use/purpose
+# Memcached operator using golang
+This project is to evaluate the userbility of using operator to manage a deployment
+inclduing the size of the deployment, names namd labels of the pods in a deployment.  
 
 ## Description
 // TODO(user): An in-depth paragraph about your project and overview of use
