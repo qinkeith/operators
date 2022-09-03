@@ -233,7 +233,9 @@ You’ll need a Kubernetes cluster to run against. You can use [KIND](https://si
 
   Namespace and deployment are specified in [config/default/kustomization.yaml](./config/default/kustomization.yaml) and [config/default/manager_config_patch.yaml](./config/default/manager_config_patch.yaml)
 
-### Now you can run the controller in your cluster form your host 
+### You can also run the controller form your host 
+
+  Insead of deploying the controller to your cluster, you can run the controller from your host:
 
   ```sh
   $ make run
