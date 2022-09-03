@@ -210,7 +210,7 @@ You’ll need a Kubernetes cluster to run against. You can use [KIND](https://si
     size: 2
   ```
 
-### Deploy the controller to the cluster with the image specified by `IMG`:
+### Deploy the controller to the cluster with the image specified by [IMG](./Makefile#L50):
 
   ```sh
   make deploy
