@@ -12,8 +12,9 @@ inclduing the size of the deployment, names namd labels of the pods in a deploym
   operator-sdk init --domain qinkeith.com --repo github.com/qinkeith/operators/memcached/golang
   ```
   - `--repo=` is required when creating a project outsile of `$GOPATH/src` as scaffolding api needs a valid module path
+  - [Dockerfile](./Dockerfile): the Dockerfile of your controller
   - [go.mod](./go.mod): used to work with Go modules
-  - [Makefilei](./Makefile): Make targets for building/deploying your controller
+  - [Makefile](./Makefile): Make targets for building/deploying your controller
   - [PROJECT](./PROJECT): Metadata for scaffolding new components
   - [main.go](./main.go): the entrypoint of your controller
     - imports [controller-runtime library](https://pkg.go.dev/sigs.k8s.io/controller-runtime) and it's logging
