@@ -82,8 +82,7 @@ func (r *MemcachedReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 		// Define a new deployment
 		dep := r.deploymentForMemcached(memcached)
 		l.Info("Creating a new Deployment", "Deployment.Namespace", dep.Namespace, "Deployment.Name", dep.Name)
-		err = r.Create(ctx, dep)
-		if err != nil {
+		if err = r.Create(ctx, dep); err != nil {
 			l.Error(err, "Failed to create new Deployment", "Deployment.Namespace", dep.Namespace, "Deployment.Name", dep.Name)
 			return ctrl.Result{}, err
 		}
@@ -98,8 +97,7 @@ func (r *MemcachedReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 	size := memcached.Spec.Size
 	if *found.Spec.Replicas != size {
 		found.Spec.Replicas = &size
-		err = r.Update(ctx, found)
-		if err != nil {
+		if err = r.Update(ctx, found); err != nil {
 			l.Error(err, "Failed to update Deployment", "Deployment.Namespace", found.Namespace, "Deployment.Name", found.Name)
 			return ctrl.Result{}, err
 		}
