@@ -159,12 +159,111 @@
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
 **Note:** Your controller will automatically use the current context in your kubeconfig file (i.e. whatever cluster `kubectl cluster-info` shows).
 
-### Deploy the operator
+### Install the custom resource definition:
+
+  ```sh
+  make install
+  ```
+
+  You should see the CRD:
+
+  ```sh
+  $ kubectl get crd
+
+  NAME                            CREATED AT
+  memcacheds.cache.qinkeith.com   2022-09-03T13:26:44Z
+  ```
+
+  Makefile uses `kustomize` to apply custom configurations and generate manifests from the config/ directory, which are piped to kubectl.
+
+  ```sh
+  kustomize build config/crd | kubectl apply -f -
+  ```
+
+
+### Create the memcached CR 
 
   ```bash
-  make deploy
+  $ kubectl apply -f config/samples/cache_v1alpha1_memcached.yaml
 
-  kubectl apply -f config/samples/cache_v1alpha1_memcached.yaml
+  memcached.cache.qinkeith.com/golang-controller-manager created
+  ```
+
+  Retrieve details about the custom resource:
+
+  ```sh
+  $ kubectl get memcached/golang-controller-manager -o yaml
+ 
+  apiVersion: cache.qinkeith.com/v1alpha1
+  kind: Memcached
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"cache.qinkeith.com/v1alpha1","kind":"Memcached","metadata":{"annotations":{},"name":"golang-controller-manager","namespace":"default"},"spec":{"size":2}}
+    creationTimestamp: "2022-09-03T13:29:07Z"
+    generation: 1
+    name: golang-controller-manager
+    namespace: default
+    resourceVersion: "148658"
+    uid: bfbe797b-090f-47bf-8f01-d3e48bafff0b
+  spec:
+    size: 2
+  ```
+
+### Deploy the controller to the cluster with the image specified by `IMG`:
+
+  ```sh
+  make deploy
+  ```
+
+  This should create a new namespace `memcached-system` with a deplyment:
+
+  ```sh
+  $ kubectl get deploy -n memcached-system
+
+  NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+  memcached-controller-manager   1/1     1            1           3m57s
+  ```
+
+  Makefile uses `kustomize` to apply custom configurations and generate manifests from the config/ directory, which are piped to kubectl.
+
+  ```sh
+  kustomize build config/default | kubectl apply -f -
+  ```
+
+  Namespace and deployment are specified in [config/default/kustomization.yaml](./config/default/kustomization.yaml) and [config/default/manager_config_patch.yaml](./config/default/manager_config_patch.yaml)
+
+### Now you can run the controller in your cluster form your host 
+
+  ```sh
+  $ make run
+
+  1.662212817010542e+09   INFO    controller-runtime.metrics      Metrics server is starting to listen    {"addr": ":8080"}
+  1.6622128170107539e+09  INFO    setup   starting manager
+  1.6622128170110793e+09  INFO    Starting server {"path": "/metrics", "kind": "metrics", "addr": "[::]:8080"}
+  1.6622128170111399e+09  INFO    Starting server {"kind": "health probe", "addr": "[::]:8081"}
+  1.662212817011349e+09   INFO    Starting EventSource    {"controller": "memcached", "controllerGroup": "cache.qinkeith.com", "controllerKind": "Memcached", "source": "kind source: *v1alpha1.Memcached"}
+  1.6622128170114233e+09  INFO    Starting Controller     {"controller": "memcached", "controllerGroup": "cache.qinkeith.com", "controllerKind": "Memcached"}
+  1.6622128171123598e+09  INFO    Starting workers        {"controller": "memcached", "controllerGroup": "cache.qinkeith.com", "controllerKind": "Memcached", "worker count": 1}
+  1.662212817112471e+09   INFO    reconcile called        {"controller": "memcached", "controllerGroup": "cache.qinkeith.com", "controllerKind": "Memcached", "memcached": {"name":"golang-controller-manager","namespace":"default"}, "namespace": "default", "name": "golang-controller-manager", "reconcileID": "125f886b-1f60-4510-aa83-dc3bfed93888"}
+  1.6622128172127845e+09  INFO    Creating a new Deployment       {"controller": "memcached", "controllerGroup": "cache.qinkeith.com", "controllerKind": "Memcached", "memcached": {"name":"golang-controller-manager","namespace":"default"}, "namespace": "default", "name": "golang-controller-manager", "reconcileID": "125f886b-1f60-4510-aa83-dc3bfed93888", "Deployment.Namespace": "default", "Deployment.Name": "golang-controller-manager"}
+  1.6622128172245946e+09  INFO    reconcile called        {"controller": "memcached", "controllerGroup": "cache.qinkeith.com", "controllerKind": "Memcached", "memcached": {"name":"golang-controller-manager","namespace":"default"}, "namespace": "default", "name": "golang-controller-manager", "reconcileID": "ac02ce63-05ba-420f-9d98-5327123fb286"}
+  1.6622128173292425e+09  INFO    Added label     {"controller": "memcached", "controllerGroup": "cache.qinkeith.com", "controllerKind": "Memcached", "memcached": {"name":"golang-controller-manager","namespace":"default"}, "namespace": "default", "name": "golang-controller-manager", "reconcileID": "ac02ce63-05ba-420f-9d98-5327123fb286", "Pod.Label": "qinkeith.com/pod-name", "Pod.Name": "golang-controller-manager-7b47fc976b-ltz5w"}
+  ```
+
+  This creates the deployment specified in the Reconcile calli with the sepcified `size`:
+
+  ```sh
+  $ kubectl get deploy
+
+  NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+  golang-controller-manager   2/2     2            2           14s
+  ```
+
+### Update memcached CR
+
+  ```sh
+  kubectl patch memcached golang-controller-manager -p '{"spec":{"size": 3}}' --type=merge
   ```
 
 ### Clean up
