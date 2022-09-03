@@ -114,6 +114,7 @@ func (r *MemcachedReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 		client.InNamespace(memcached.Namespace),
 		client.MatchingLabels(labelsForMemcached(memcached.Name)),
 	}
+
 	if err = r.List(ctx, podList, listOpts...); err != nil {
 		l.Error(err, "Failed to list pods", "Memcached.Namespace", memcached.Namespace, "Memcached.Name", memcached.Name)
 		return ctrl.Result{}, err
@@ -137,9 +138,9 @@ func (r *MemcachedReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 			pod.Labels = make(map[string]string)
 		}
 		pod.Labels[podLabel] = pod.Name
-		l.Info("Added label", "Pod.Name", pod.Name)
+		l.Info("Added label", "Pod.Label", podLabel, "Pod.Name", pod.Name)
 		if err := r.Update(ctx, &pod); err != nil {
-			l.Error(err, "Failed to update for", pod.Name)
+			l.Error(err, "Failed to update for", "Pod.Name", pod.Name)
 			return ctrl.Result{}, err
 		}
 	}
